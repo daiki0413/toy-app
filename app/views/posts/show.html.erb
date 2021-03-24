@@ -1,0 +1,33 @@
+<div class="container">
+    <h1>投稿の詳細</h1>
+    <div class="row">
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <img src="<%="/user_images/#{@user.image}"%>">
+              <div class="caption">
+                <h3><%=link_to(@user.name,"/users/#{@user.id}")%></h3>
+                <p><%=@post.content%></p>
+                <p><%=@post.created_at%></p>
+                
+                <p>
+                <%if Like.find_by(user_id:@current_user.id,post_id:@post.id)%>
+                  <%=link_to("/likes/#{@post.id}/destroy",{method:"post"})do%>
+                    <i class="fas fa-heart unlike"></i>
+                  <%end%>  
+                <%else%>
+                  <%=link_to("/likes/#{@post.id}/create",{method:"post"})do%>
+                    <i class="far fa-heart like"></i>
+                  <%end%>  
+                <%end%>  
+                <%=@likes_count%>
+                </p>
+                  
+                <%if @current_user.id==@post.user_id%>
+                  <p><%=link_to("編集","/posts/#{@post.id}/edit",class:"btn btn-primary",role:"button")%>
+                  <%=link_to("削除","/posts/#{@post.id}/destroy",class:"btn btn-primary",role:"button",method:"post")%></p>
+                <%end%>  
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
