@@ -1,0 +1,16 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      post: 投稿
+    attributes:
+      user:
+        name: 名前
+        mail: メールアドレス
+        password: パスワード
+      post:
+        content: 投稿内容
+  will_paginate:
+    previous_label: '&lt 前へ'
+    next_label: '次へ &gt'
+    page_gap: …

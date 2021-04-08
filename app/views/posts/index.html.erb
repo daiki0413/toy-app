@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>みんなの投稿</h1>
+    <h1>フォローしている人と自分の投稿</h1>
     <%@posts.each do |post|%>
         <div class="media">
           <div class="media-left">
@@ -10,7 +10,9 @@
           <div class="media-body">
             <h4 class="media-heading"><%=link_to(post.user.name,"/users/#{post.user.id}")%></h4>
             <p><%=link_to(post.content,"/posts/#{post.id}")%></p>
+            <div class="time"><%=time_ago_in_words(post.created_at)%>前</div>
           </div>
         </div>
     <%end%>
+    <%=will_paginate%>
 </div>

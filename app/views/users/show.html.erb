@@ -10,15 +10,30 @@
                 <p>
                 <%if @current_user.id==@user.id%>
                     <%=link_to("編集","/users/#{@user.id}/edit",class:"btn btn-primary",role:"button")%>
-                <%end%>    
+                <%end%>   
+                
+                <%if Relationship.find_by(follower_id:@current_user.id,followed_id:@user.id)%>
+                  <%if @current_user.id!=@user.id%>
+                    <%=link_to("フォロー解除","/relationships/#{@user.id}/destroy",method:"post",class:"btn btn-primary")%>
+                  <%end%>  
+                <%else%>  
+                  <%if @current_user.id!=@user.id%>
+                    <%=link_to("フォローする","/relationships/#{@user.id}/create",method:"post",class:"btn btn-primary")%>
+                  <%end%>  
+                <%end%>  
+                <p>フォロー<%=@user.following.count%>　フォロワー<%=@user.followers.count%></p>
               </div>
             </div>
           </div>
     </div>
-    <ul class="nav nav-tabs">
-      <li role="presentation" class="active"><%=link_to(@user.name+"の投稿","/users/#{@user.id}")%></li>
-      <li role="presentation"><%=link_to(@user.name+"がいいねした投稿","/users/#{@user.id}/likes")%></li>
-    </ul>
+    <%if @user.posts.any?%>
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><%=link_to(@user.name+"の投稿"+"("+@posts_count.to_s+")","/users/#{@user.id}")%></li>
+        <li role="presentation"><%=link_to(@user.name+"がいいねした投稿"+"("+@likes_count.to_s+")","/users/#{@user.id}/likes")%></li>
+        <li role="presentation"><%=link_to("フォローしているユーザー"+"("+@user.following.count.to_s+")","/users/#{@user.id}/following")%></li>
+        <li role="presentation"><%=link_to("フォロワー"+"("+@user.followers.count.to_s+")","/users/#{@user.id}/followers")%></li>
+      </ul>
+    <%end%>
     <%@user.posts.each do |post|%>
         <div class="media">
           <div class="media-left">
@@ -29,6 +44,7 @@
           <div class="media-body">
             <h4 class="media-heading"><%=link_to(post.user.name,"/users/#{post.user.id}")%></h4>
             <p><%=link_to(post.content,"/posts/#{post.id}")%></p>
+            <div class="time"><%=time_ago_in_words(post.created_at)%>前</div>
           </div>
         </div>
     <%end%>

@@ -1,0 +1,52 @@
+<div class="container">
+    <h1>フォロワー一覧</h1>
+    <div class="row">
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <img src="<%="/user_images/#{@user.image}"%>">
+              <div class="caption">
+                <h3><%=@user.name%></h3>
+                <p><%=@user.mail%></p>
+                <p>
+                <%if @current_user.id==@user.id%>
+                    <%=link_to("編集","/users/#{@user.id}/edit",class:"btn btn-primary",role:"button")%>
+                <%end%>   
+                
+                <%if Relationship.find_by(follower_id:@current_user.id,followed_id:@user.id)%>
+                  <%if @current_user.id!=@user.id%>
+                    <%=link_to("フォロー解除","/relationships/#{@user.id}/destroy",method:"post",class:"btn btn-primary")%>
+                  <%end%>  
+                <%else%>  
+                  <%if @current_user.id!=@user.id%>
+                    <%=link_to("フォローする","/relationships/#{@user.id}/create",method:"post",class:"btn btn-primary")%>
+                  <%end%>  
+                <%end%>  
+                <p>フォロー<%=@user.following.count%>　フォロワー<%=@user.followers.count%></p>
+              </div>
+            </div>
+          </div>
+    </div>
+    <%if @user.posts.any?%>
+      <ul class="nav nav-tabs">
+        <li role="presentation"><%=link_to(@user.name+"の投稿"+"("+@posts_count.to_s+")","/users/#{@user.id}")%></li>
+        <li role="presentation"><%=link_to(@user.name+"がいいねした投稿"+"("+@likes_count.to_s+")","/users/#{@user.id}/likes")%></li>
+        <li role="presentation"><%=link_to("フォローしているユーザー"+"("+@user.following.count.to_s+")","/users/#{@user.id}/following")%></li>
+        <li role="presentation" class="active"><%=link_to("フォロワー"+"("+@user.followers.count.to_s+")","/users/#{@user.id}/followers")%></li>      </ul>
+    <%end%>
+    <%@users.each do |user|%>
+        <div class="media">
+          <div class="media-left">
+            <a href="#">
+              <img class="media-object" src="<%="/user_images/#{user.image}"%>" width="100px" height="100px">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading"><%=link_to(user.name,"/users/#{user.id}")%></h4>
+            <p><%=user.mail%></p>
+            <%if @current_user.admin && @current_user.admin!=user.admin%>
+                <%=link_to("削除","/users/#{user.id}/destroy",method:"post",class:"btn btn-danger",role:"button")%>
+            <%end%>
+          </div>
+        </div>
+    <%end%>
+</div>

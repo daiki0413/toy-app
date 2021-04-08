@@ -9,8 +9,13 @@
           </div>
           <div class="media-body">
             <h4 class="media-heading"><%=link_to(user.name,"/users/#{user.id}")%></h4>
-            <%=user.mail%>
+            <p><%=user.mail%></p>
+            <%if @current_user.admin && @current_user.admin!=user.admin%>
+                <%=link_to("削除","/users/#{user.id}/destroy",method:"post",class:"btn btn-danger",role:"button")%>
+            <%end%>
           </div>
         </div>
     <%end%>
+    
+      <%=will_paginate%>
 </div>

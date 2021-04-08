@@ -1,7 +1,7 @@
 <div class="container">
     <h1>編集ページ</h1>
     <%@post.errors.full_messages.each do |message|%>
-        <%=message%>
+        <p class="text-danger"><%=message%></p>
     <%end%>
     <%=form_tag("/posts/#{@post.id}/update")do%>
         <textarea name="content" class="form-control" rows="3">

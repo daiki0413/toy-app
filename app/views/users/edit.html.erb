@@ -1,7 +1,7 @@
 <div class="container">
     <h1>ユーザー情報編集</h1>
     <%@user.errors.full_messages.each do |message|%>
-        <%=message%>
+        <p class="text-danger"><%=message%></p>
     <%end%>
     <%=form_tag("/users/#{@user.id}/update",{multipart:true})do%>
           <div class="form-group">
@@ -13,13 +13,9 @@
             <%=text_field :user,:mail,class:"form-control",id:"form-mail",value:@user.mail%>
           </div>          
           <div class="form-group">
-            <%=label_tag "form-password","Password"%>
-            <%=text_field :user,:password,class:"form-control",id:"form-password",type:"password",value:@user.password%>
-          </div>   
-          <div class="form-group">
             <%=label_tag "form-image","Image"%>
             <input name="image" type="file" id="form-image">
           </div>             
-        <%=submit_tag "投稿",class:"btn btn-primary"%>
+        <%=submit_tag "編集",class:"btn btn-primary"%>
     <%end%>
 </div>

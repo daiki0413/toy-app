@@ -1,13 +1,9 @@
 <div class="container">
     <h1>ログインページ</h1>
     <%if @error_message%>
-        <%=@error_message%>
+        <p class="text-danger"><%=@error_message%></p>
     <%end%>    
     <%=form_tag("/login")do%>
-          <div class="form-group">
-            <%=label_tag "form-name","Name"%>
-            <%=text_field :user,:name,class:"form-control",id:"form-name",placeholder:"Name"%>
-          </div>
           <div class="form-group">
             <%=label_tag "form-mail","Mail"%>
             <%=text_field :user,:mail,class:"form-control",id:"form-mail",placeholder:"Mail"%>
@@ -16,6 +12,6 @@
             <%=label_tag "form-password","Password"%>
             <%=text_field :user,:password,class:"form-control",id:"form-password",placeholder:"Password",type:"password"%>
           </div>           
-        <%=submit_tag "投稿",class:"btn btn-primary"%>
+        <%=submit_tag "ログイン",class:"btn btn-primary"%>
     <%end%>
 </div>

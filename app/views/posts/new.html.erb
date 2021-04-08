@@ -1,9 +1,9 @@
 <div class="container">
     <h1>新規投稿</h1>
     <%@post.errors.full_messages.each do |message|%>
-        <%=message%>
+        <p class="text-danger"><%=message%></p>
     <%end%>
-    <%=form_tag("/create")do%>
+    <%=form_tag("/posts/create")do%>
         <textarea name="content" class="form-control" rows="3">
         
         </textarea>

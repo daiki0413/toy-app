@@ -10,7 +10,7 @@ class PostsController < ApplicationController
         end  
     end
     def index
-        @posts=Post.all.order(content: :desc)
+        @posts=Post.where(user_id:[*@current_user.following_ids,@current_user.id]).order(created_at: :desc).paginate(page:params[:page])
     end
     def new
         @post=Post.create
